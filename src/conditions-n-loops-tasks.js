@@ -63,8 +63,8 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
 function canQueenCaptureKing(queen, king) {
-  if (king.x === king.y && queen.x === queen.y) return true;
   if (king.x === queen.x || king.y === queen.y) return true;
+  if (Math.abs(king.x - queen.x) === Math.abs(king.y - queen.y)) return true;
   return false;
 }
 
@@ -104,8 +104,29 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const roman = {
+    1: 'I',
+    2: 'II',
+    3: 'III',
+    4: 'IV',
+    5: 'V',
+    6: 'VI',
+    7: 'VII',
+    8: 'VIII',
+    9: 'IX',
+    10: 'X',
+  };
+  let result = '';
+  const tens = Math.floor(num / 10);
+  const ost = num % 10;
+  for (let i = 0; i < tens; i += 1) {
+    result += roman[10];
+  }
+  if (ost !== 0) {
+    result += roman[ost];
+  }
+  return result;
 }
 
 /**
@@ -209,8 +230,14 @@ function isPalindrome(str) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  let i = 0;
+  let searchIndex = -1;
+  while (i < str.length) {
+    if (str[i] === letter) searchIndex = i;
+    i += 1;
+  }
+  return searchIndex;
 }
 
 /**
@@ -228,8 +255,14 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let insertNumber = num;
+  while (insertNumber > 0) {
+    const lastDigitOfNum = insertNumber % 10;
+    if (lastDigitOfNum === digit) return true;
+    insertNumber = Math.floor(insertNumber / 10);
+  }
+  return false;
 }
 
 /**
@@ -245,8 +278,18 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let sumLeftSide = 0;
+  let sumRightSide = 0;
+  for (let i = 0; i < arr.length; i += 1) {
+    sumLeftSide += arr[i];
+  }
+  for (let i = arr.length - 1; i >= 0; i -= 1) {
+    sumLeftSide -= arr[i];
+    if (sumRightSide === sumLeftSide) return i;
+    sumRightSide += arr[i];
+  }
+  return -1;
 }
 
 /**
